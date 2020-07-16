@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.HashMap;
 
 /**
@@ -34,71 +35,73 @@ public class Leetcode1 {
                     result[0]=i;
                     result[1]=j;
                     return result;
+
                 }
             }
+
         }
         return null;
     }
 
-    public int[] calculate1(int[] info, int k){
-        if(info==null){
+
+        public int[] calculate1(int[] info, int k){
+            if(info==null){
+                return null;
+            }
+            int[] result= new int[2];
+            for (int i = 0; i < info.length-1; i++) {
+                int m = k-result[i];
+                int j =i+1;
+                while (j < info.length) {
+                    if (info[j]==m){
+                        result[0]=i;
+                        result[1]=j;
+                        return result;
+                    }else {
+                        j++;
+                    }
+                }
+            }
             return null;
         }
-        int[] result= new int[2];
-        for (int i = 0; i < info.length-1; i++) {
-            int m = k-result[i];
-            int j =i+1;
-            while (j < info.length) {
-                if (info[j]==m){
-                    result[0]=i;
-                    result[1]=j;
-                    return result;
-                }else {
-                    j++;
+
+        /**
+         * 时间复杂度为O（n）,空间复杂度：O（n）
+         * @param info
+         * @param k
+         * @return
+         */
+        public int[] calculate3(int[] info, int k){
+            HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
+            for (int i = 0; i <info.length ; i++) {
+                integerIntegerHashMap.put(info[i], i);
+            }
+            for (int i = 0; i < info.length ; i++) {
+                int temp = k-info[i];
+                if(integerIntegerHashMap.containsKey(temp) && integerIntegerHashMap.get(temp)!=null){
+                    return new int[]{i, integerIntegerHashMap.get(temp)};
                 }
             }
+            return null;
         }
-        return null;
-    }
 
-    /**
-     * 时间复杂度为O（n）,空间复杂度：O（n）
-     * @param info
-     * @param k
-     * @return
-     */
-    public int[] calculate3(int[] info, int k){
-        HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
-        for (int i = 0; i <info.length ; i++) {
-            integerIntegerHashMap.put(info[i], i);
-        }
-        for (int i = 0; i < info.length ; i++) {
-            int temp = k-info[i];
-            if(integerIntegerHashMap.containsKey(temp) && integerIntegerHashMap.get(temp)!=null){
-                return new int[]{i, integerIntegerHashMap.get(temp)};
+        /**
+         * 时间复杂度为O（n）,空间复杂度：O（n）
+         * @param info
+         * @param k
+         * @return
+         */
+        public int[] calculate4(int[] info, int k){
+            HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
+            for (int i = 0; i < info.length ; i++) {
+                int temp = k-info[i];
+                if(integerIntegerHashMap.containsKey(temp) && integerIntegerHashMap.get(temp)!=null){
+                    return new int[]{i, integerIntegerHashMap.get(temp)};
+                }
+                integerIntegerHashMap.put(info[i], i);
             }
+            return null;
         }
-        return null;
+
+
     }
-
-    /**
-     * 时间复杂度为O（n）,空间复杂度：O（n）
-     * @param info
-     * @param k
-     * @return
-     */
-    public int[] calculate4(int[] info, int k){
-        HashMap<Integer, Integer> integerIntegerHashMap = new HashMap<>();
-        for (int i = 0; i < info.length ; i++) {
-            int temp = k-info[i];
-            if(integerIntegerHashMap.containsKey(temp) && integerIntegerHashMap.get(temp)!=null){
-                return new int[]{i, integerIntegerHashMap.get(temp)};
-            }
-            integerIntegerHashMap.put(info[i], i);
-        }
-        return null;
-    }
-
-
-
-}
