@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * this is a extension for the leetcode 2
  * why this happen \?
@@ -88,7 +90,6 @@ public class Leetcode2Extension {
         next.next = head;
         return returnList;
 
-
     }
 
 
@@ -99,10 +100,42 @@ public class Leetcode2Extension {
         listNode2.next = listNode22;
         listNode22.next = null;
         System.out.println("the original list is "+listNode2);
-        System.out.println("the invert result is "+ Leetcode2Extension.revert1(listNode2));
+//        System.out.println("the invert result is "+ Leetcode2Extension.revert1(listNode2));
         //很奇怪的一个点就是不知道为什么，下面是正确的方法，但是递归输入listNode2的时候就只有一个节点，神奇
-        System.out.println("recursion1   "+ Leetcode2Extension.revert2Recurson(listNode2));
-        System.out.println("recursion2   "+ Leetcode2Extension.recursion(listNode2));
+//        System.out.println("recursion1   "+ Leetcode2Extension.revert2Recurson(listNode2));
+//        System.out.println("recursion2   "+ Leetcode2Extension.recursion(listNode2));
+
+        //上面的疑惑解开了，原因就是之前的操作对这个链表进行了修改
+        //如果仅仅打印第四个，那么就不会出现问题
+//        System.out.println(Leetcode2Extension.diedai(listNode2));
+        System.out.println(Leetcode2Extension.digui(listNode2));
+    }
+
+    public static ListNode diedai(ListNode head ){
+
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode next;
+        ListNode prev = null;
+        while (head != null) {
+            next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+
+    public static ListNode digui(ListNode head){
+        if (head == null || head.next == null) {
+
+            return head;
+        }
+        ListNode newHead = digui(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newHead;
     }
 
 }
