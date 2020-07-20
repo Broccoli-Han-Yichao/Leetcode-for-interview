@@ -4,7 +4,7 @@ public class Leetcode3 {
 
 
     /**
-     * 找到字符串长度
+     * 找到字符串长度 时间复杂度o（n^3）
      * @param s
      * @return
      */
@@ -50,16 +50,26 @@ public class Leetcode3 {
     }
 
     /**
-     * 滑动窗口
+     * 滑动窗口 这个版本时间复杂度为 O（n^2）
      * @param s
      * @return
      */
-    public static int SlipWindow(String s){
+    public static int slipWindow(String s){
         int max = 0;
+        for(int i=0; i< s.length(); i++){
+            HashSet<Character> characters = new HashSet<>();
+            characters.add(s.charAt(i));
+            int j=i+1;
+            while (j <s.length()){
+                if(characters.contains(s.charAt(j))){
+                    break;
+                }
+                characters.add(s.charAt(j));
+                j++;
+            }
+            max = Math.max(max, j - i);
+        }
         return max;
-
-
-
     }
 
 
@@ -67,6 +77,7 @@ public class Leetcode3 {
 
 
         System.out.println(findLength("abcd"));
+        System.out.println(slipWindow("aaa"));
 
 
     }
