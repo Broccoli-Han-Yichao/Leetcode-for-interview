@@ -142,12 +142,31 @@ public class Leetcode3 {
         HashMap<Character, Integer> map = new HashMap<>();
         for(int begin=0, end=0; end<s.length(); end++){
             if (map.containsKey(s.charAt(end))){
+                //其实没太想明白这个 Math.max 的作用,解释说是因为这个没有实现删除map中的元素,就是说新的begin不能比旧的小
                 begin = Math.max(begin, map.get(s.charAt(end)) + 1);
+                //测试一下，会出现错误
+//                begin = map.get(s.charAt(end))+1;
             }
             map.put(s.charAt(end), end);
             max = Math.max(max, end - begin + 1);
         }
         return max;
+    }
+
+    /**
+     * 网上看到的基本属于最简的方法，使用数组
+     * @param s
+     * @return
+     */
+    public static int useArrays(String s){
+      int max =0;
+      int[] array = new int[128];
+      for(int begin =0 , end = 0; end< s.length(); end++){
+          begin = Math.max(begin, array[s.charAt(end)] + 1);
+          array[s.charAt(end)] = end;
+          max = Math.max(max, end - begin + 1);
+      }
+      return  max;
     }
 
 
@@ -158,7 +177,8 @@ public class Leetcode3 {
         System.out.println(slipWindow("aaa"));
         System.out.println(easySlipWindow("bacabd"));
         System.out.println(moreEasyWay("abcedab"));
-        System.out.println(getLength("abcd"));
+        System.out.println(getLength("abcdabcaddb"));
+        System.out.println(useArrays("abcdab"));
 
 
     }
