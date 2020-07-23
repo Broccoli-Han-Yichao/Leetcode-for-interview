@@ -1,5 +1,3 @@
-import com.sun.org.apache.regexp.internal.RE;
-
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -122,6 +120,7 @@ public class Leetcode3 {
             }else {
 
                 begin = (Integer) characters.get(s.charAt(end))+1;
+                //
                 characters = new HashMap<Character,Integer>();
                 end = begin;
 
@@ -182,4 +181,23 @@ public class Leetcode3 {
 
 
     }
+
+    /**
+     *
+     * 关于为什么要使用 Math.max() 来标记 begin ？
+     *
+     * 设想一种场景，这个就不用具体举例子了，thinking is more important
+     *
+     * [begin, end) 左闭右开 end
+     *
+     * 因为滑动窗口，当最后两种方法使用 map和数组，并没有删除掉已经加入的元素
+     *
+     * 当 end的具体的值，已经加入集合，有两种可能，在begin之前，在begin之后
+     *
+     * 在 begin 之前，之后肯定就要使用现在的begin，然后把重复的 begin（end） 新的值（位置）加入，更新map或者数组
+     *
+     * 在 begin 之后，直接就使用比begin更大的重复的值（从map或者数组取得），更新begin
+     *
+     *
+     */
 }
