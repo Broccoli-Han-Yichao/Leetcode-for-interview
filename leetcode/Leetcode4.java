@@ -1,3 +1,5 @@
+import com.sun.org.apache.regexp.internal.RE;
+
 public class Leetcode4 {
 
     /**
@@ -46,7 +48,7 @@ public class Leetcode4 {
     }
 
     /**
-     * 辅助函数，判断奇数和偶数
+     * 辅助函数，判断奇数和偶数，然后返回中位数的结果
      * @param array
      * @param length
      * @return
@@ -62,6 +64,48 @@ public class Leetcode4 {
         return result;
     }
 
+    /**
+     * 一种新的方法，复杂度是一样的，但是使用了一种新的思路
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static double findMedianSortedArrays2(int[] nums1, int[] nums2){
+
+        int first = nums1.length, second = nums2.length;
+        int length = first+ second;
+        int left= -1, right =-1;
+        int start1 = 0, start2= 0;
+        //并没有真实的创建数组或者说，在数组中存储具体的值，而是用左右两个指针
+        //然后仅仅通过i来迭代次数，不实际使用i的值
+        for (int i = 0; i <= length/2; i++) {
+            //这里赋值的方法特别巧妙
+            left = right;
+            //但如果nums2数组此刻已经没有数字了，
+            //继续取数字nums2[start2]，则会越界，
+            //所以判断下start2是否大于数组长度了，
+            //这样 || 后边的就不会执行了，也就不会导致错误了，
+            //所以增加为start1<first &&(start2>=second||nums1[start1]<nums2[start2])
+            if(start1<first &&(start2>=second||nums1[start1]<nums2[start2])){
+                right = nums1[start1++];
+            }else {
+                right = nums2[start2++];
+            }
+
+        }
+        //第二个设计巧妙的点，&来判断奇偶性
+        if((length&1)==0){
+            return (float)(right+left)/2;
+        }else {
+            return right;
+        }
+
+    }
+
+
+
+
+
 
 
 
@@ -74,6 +118,19 @@ public class Leetcode4 {
 //        double x= (float) 5/2;
 //        System.out.println(x);
         System.out.println(findMedianSortedArrays(num1,num2));
+
+
+        System.out.println(1&7);
+        System.out.println(1&8);
+        //但如果nums2数组此刻已经没有数字了，
+        // 继续取数字nums2[start2]，则会越界，
+        // 所以判断下start2是否大于数组长度了，
+        // 这样 || 后边的就不会执行了，也就不会导致错误了，
+        // 所以增加为start1<first &&(start2>=second||nums1[start1]<nums2[start2])
+
+        System.out.println(findMedianSortedArrays2(num1,num2));
+
+
 
     }
 
