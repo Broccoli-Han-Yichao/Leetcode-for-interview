@@ -1,5 +1,3 @@
-import com.sun.org.apache.regexp.internal.RE;
-
 public class Leetcode4 {
 
     /**
@@ -93,11 +91,94 @@ public class Leetcode4 {
             }
 
         }
-        //第二个设计巧妙的点，&来判断奇偶性
+        //第二个设计巧妙的点，&来判断奇偶性：奇数&1==1，偶数&1==0
         if((length&1)==0){
             return (float)(right+left)/2;
         }else {
             return right;
+        }
+
+    }
+
+    /**
+     * 分治法，求第k小的数特殊情况，求中位数，分治法，分而治之
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static double findMedianSortedArrays3(int[] nums1, int[] nums2){
+
+        int m = nums1.length;
+        int n = nums2.length;
+        //奇数和偶数找到中位数的位置，如果是奇数的话，两个位置一样
+        int left = (m+n+1)/2;
+        int right = (m+n+2)/2;
+        return (getKth(nums1,0,m-1,nums2,0,n-1,left)+getKth(nums1,0,m-1,nums2,0,
+                n-1,right))*0.5;
+    }
+
+    /**
+     * 求第K大的数
+     * @param nums1
+     * @param start1
+     * @param end1
+     * @param nums2
+     * @param start2
+     * @param end2
+     * @param k
+     * @return
+     */
+    public static double getKth(int[] nums1, int start1, int end1 , int[] nums2, int start2, int end2, int k){
+        int len1 = end1 - start1 + 1;
+        int len2 = end2 - start2 + 1;
+        //让 len1 的长度小于 len2，这样就能保证如果有数组空了，一定是len1
+        if (len1 > len2) return getKth(nums2, start2, end2, nums1, start1, end1, k);
+        if (len1 == 0) return nums2[start2 + k - 1];
+        if (k == 1) return Math.min(nums1[start1], nums2[start2]);
+        int i = start1 + Math.min(len1, k / 2) - 1;
+        int j = start2 + Math.min(len2, k / 2) - 1;
+        if (nums1[i] > nums2[j]) {
+            return getKth(nums1, start1, end1, nums2, j + 1, end2, k - (j - start2 + 1));
+        }
+        else {
+            return getKth(nums1, i + 1, end1, nums2, start2, end2, k - (i - start1 + 1));
+        }
+
+    }
+
+    //个人练习
+    public static double getKth2(int[] nums1, int start1, int end1 , int[] nums2, int start2, int end2, int k){
+
+        int length1 = end1-start1+1;
+        int length2 = end2-start2+1;
+        if(length1>length2){
+            return getKth2(nums2, start2,end2,nums1,start1,end1 ,k);
+        }
+//        if (k == 0) {
+//            return nums1[start1] < nums2[start2] ? nums1[start1] : nums2[start2];
+//        }
+//        if(length1 == 1) {
+//           return  nums2[k-1-1];
+//        }
+
+        //上面这样定义是有问题的，为什么自己仔细想想,怎么可能k是0呢？
+        if(k==1){
+            return Math.min(nums1[start1], nums2[start2]);
+        }
+        if(length1 == 0){
+            //开始这样写也有问题
+//            return nums2[k];
+            return nums2[start2 + k - 1];
+        }
+        int i = start1+Math.min(length1,k/2)-1;
+        int j = start2+ Math.min(length2,k/2)-1;
+        if(nums1[i]<nums2[j]){
+            //这句话有问题，问题出现在最后一个参数
+//            return getKth2(nums1, i + 1, end1, nums2, start2, end2, k - i + 1);
+            return getKth2(nums1, i + 1, end1, nums2, start2, end2, k - (i - start1 + 1));
+        }else {
+            return getKth2(nums1, start1, end1, nums2, j + 1, end2, k - (j - start2 + 1));
+
         }
 
     }
@@ -109,7 +190,9 @@ public class Leetcode4 {
 
 
 
-    public static void main(String[] args) {
+
+
+        public static void main(String[] args) {
 //        int x =5;
 //        System.out.println((int)x/2);
 
@@ -129,6 +212,9 @@ public class Leetcode4 {
         // 所以增加为start1<first &&(start2>=second||nums1[start1]<nums2[start2])
 
         System.out.println(findMedianSortedArrays2(num1,num2));
+
+
+        System.out.println("测试"+1/2);
 
 
 
