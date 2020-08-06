@@ -184,6 +184,20 @@ public class Leetcode4 {
     }
 
 
+    /**
+     * 解法4 同样是通过二分，但是这个方法略复杂，需要认真考虑
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static double findMedianSortedArrays4(int[] nums1, int[] nums2){
+
+
+
+        return 0;
+    }
+
+
 
 
 
